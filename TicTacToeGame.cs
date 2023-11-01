@@ -18,6 +18,25 @@ public partial class TicTacToeGame : Node2D
 		ConnectGameOverDialogToRestartGame();
 	}
 
+	public void ConfigureGame(Difficulty difficulty, StartingPlayer startingPlayer)
+	{
+		currentDifficulty = difficulty;
+
+		switch(startingPlayer)
+		{
+	  case StartingPlayer.Player:
+		humanPlayer = CellState.X;
+		computerPlayer = CellState.O;
+		break;
+	  case StartingPlayer.Computer:
+		humanPlayer = CellState.O;
+		computerPlayer = CellState.X;
+		break;
+	  default:
+		throw new NotSupportedException($"Starting player {startingPlayer} is not supported.");
+	}
+	}
+
 	private void ConnectGameOverDialogToRestartGame()
 	{
 		var gameOverDialog = GetGameOverDialog();

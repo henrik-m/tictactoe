@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://wwn0oq7yqnwo"]
+
+[ext_resource type="Script" path="res://MainMenu.cs" id="1_2v8kk"]
+[ext_resource type="Theme" uid="uid://dcssvuro8rcnj" path="res://button_theme.tres" id="1_fvayv"]
+[ext_resource type="Theme" uid="uid://cyv6jh08pjnik" path="res://options_theme.tres" id="2_rvod0"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_2v8kk")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(800, 800)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VFlowContainer" type="VFlowContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+theme = ExtResource("1_fvayv")
+
+[node name="GameTitle" type="Label" parent="CenterContainer/VFlowContainer"]
+layout_mode = 2
+text = "Tic Tac Toe"
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/VFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_rvod0")
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="DifficultyLabel" type="Label" parent="CenterContainer/VFlowContainer/GridContainer"]
+layout_mode = 2
+text = "Difficulty"
+
+[node name="DifficultyOption" type="OptionButton" parent="CenterContainer/VFlowContainer/GridContainer"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Hard"
+popup/item_1/id = 1
+
+[node name="StartingPlayerLabel" type="Label" parent="CenterContainer/VFlowContainer/GridContainer"]
+layout_mode = 2
+text = "Starting Player"
+
+[node name="StartingPlayerOption" type="OptionButton" parent="CenterContainer/VFlowContainer/GridContainer"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Player"
+popup/item_0/id = 0
+popup/item_1/text = "Computer"
+popup/item_1/id = 1
+
+[node name="StartGameButton" type="Button" parent="CenterContainer/VFlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start Game"
