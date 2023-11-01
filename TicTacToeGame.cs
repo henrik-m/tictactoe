@@ -16,6 +16,13 @@ public partial class TicTacToeGame : Node2D
 	{
 		ResetGame();
 		ConnectButtonsToOnCellPressed();
+		ConnectGameOverDialogToRestartGame();
+	}
+
+	private void ConnectGameOverDialogToRestartGame()
+	{
+		var gameOverDialog = GetGameOverDialog();
+		gameOverDialog.Confirmed += () => ResetGame();
 	}
 
 	private void ConnectButtonsToOnCellPressed()
@@ -58,6 +65,11 @@ public partial class TicTacToeGame : Node2D
 		}
 	}
 
+	private AcceptDialog GetGameOverDialog()
+	{
+		return GetNode<AcceptDialog>("GameOverDialog");
+	}
+
 	private Button GetButton(int x, int y)
 	{
 		return GetNode<Button>($"CenterContainer/GridContainer/Button_{x}{y}");
@@ -85,16 +97,23 @@ public partial class TicTacToeGame : Node2D
 		{
 			winner = CheckForWinnerInDiagonals();
 		}
-		if (winner != CellState.Empty)
+		if (winner != CellState.Empty || IsBoardFull())
 		{
-			GD.Print($"Player {winner} wins!");
-			ResetGame();
-		}
-		else
-		{
-			GD.Print("No winner yet.");
+			ShowGameOverDialog(winner);
 		}
 	}
+
+	private bool IsBoardFull()
+	{
+    foreach (var cell in gameBoard)
+		{
+      if (cell == CellState.Empty)
+			{
+        return false;
+      }
+    }
+    return true;
+  }
 
 	private CellState CheckForWinnerInRows()
 	{
@@ -131,5 +150,21 @@ public partial class TicTacToeGame : Node2D
 			return gameBoard[2, 0];
 		}
 		return CellState.Empty;
+	}
+
+	private void ShowGameOverDialog(CellState winner)
+	{
+		var winnerDialog = GetGameOverDialog();
+
+		if (winner == CellState.Empty)
+		{
+      winnerDialog.DialogText = "It's a tie!";
+    }
+    else
+		{
+      winnerDialog.DialogText = $"Player {winner} wins!";
+    }
+
+		winnerDialog.PopupCentered();
 	}
 }
